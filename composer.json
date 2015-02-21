@@ -1,0 +1,22 @@
+{
+    "name": "thunder/logeek",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tomasz Kowalczyk",
+            "email": "tomasz@kowalczyk.cc"
+        }
+    ],
+    "require": {
+
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "Thunder\\Logeek\\": "src/",
+            "Thunder\\Logeek\\Tests\\": "tests"
+        }
+    }
+}

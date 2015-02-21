@@ -1,0 +1,18 @@
+Operations:
++ function
++ move
++ rotate
++ pick
++ open
+
+Operators:
++ if
+* while
++ for
+* break
+
+Sensors:
++ distance
++ proximity
++ type
+* color
