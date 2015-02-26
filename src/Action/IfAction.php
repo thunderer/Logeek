@@ -2,23 +2,26 @@
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
-use Thunder\Logeek\Traits\ActionTrait;
+use Thunder\Logeek\Board;
 
 class IfAction implements ActionInterface
     {
-    use ActionTrait;
-
-    public function execute($alias, array $operation)
+    public function execute(Board $board, $alias, array $operation)
         {
         switch($operation['condition'])
             {
             case 'variable-equal':
                 {
-                $this->board->getVariable($operation['variable']) === $operation['value']
-                    ? $this->board->runActorProgram($alias, $operation['true'])
-                    : $this->board->runActorProgram($alias, $operation['false']);
+                $board->getVariable($operation['variable']) === $operation['value']
+                    ? $board->runActorProgram($alias, $operation['true'])
+                    : $board->runActorProgram($alias, $operation['false']);
                 break;
                 }
             }
+        }
+
+    public function getAlias()
+        {
+        return 'if';
         }
     }

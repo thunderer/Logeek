@@ -23,10 +23,10 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             'brick' => 'B',
             ));
         $board->addActions(array(
-            'move' => MoveAction::class,
-            'rotate' => RotateAction::class,
-            'pick' => PickAction::class,
-            'function' => FunctionAction::class,
+            new MoveAction(),
+            new RotateAction(),
+            new PickAction(),
+            new FunctionAction(),
             ));
         $board->loadFromString(trim(''
             .'#######'."\n"
@@ -77,13 +77,13 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             'door' => 'D',
             ));
         $board->addActions(array(
-            'move' => MoveAction::class,
-            'rotate' => RotateAction::class,
-            'pick' => PickAction::class,
-            'function' => FunctionAction::class,
-            'for' => ForLoopAction::class,
-            'sensor-distance' => DistanceSensorAction::class,
-            'open' => OpenAction::class,
+            new MoveAction(),
+            new RotateAction(),
+            new PickAction(),
+            new FunctionAction(),
+            new ForLoopAction(),
+            new DistanceSensorAction(),
+            new OpenAction(),
             ));
         $board->loadFromString(trim(''
             .'#######'."\n"
@@ -123,11 +123,11 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             'green' => 'G',
             ));
         $board->addActions(array(
-            'move' => MoveAction::class,
-            'rotate' => RotateAction::class,
-            'sensor-distance' => DistanceSensorAction::class,
-            'sensor-type' => TypeSensorAction::class,
-            'if' => IfAction::class,
+            new MoveAction(),
+            new RotateAction(),
+            new DistanceSensorAction(),
+            new TypeSensorAction(),
+            new IfAction(),
             ));
         $board->loadFromString(trim(''
             .'#######'."\n"

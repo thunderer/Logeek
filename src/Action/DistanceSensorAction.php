@@ -2,12 +2,10 @@
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
-use Thunder\Logeek\Traits\ActionTrait;
+use Thunder\Logeek\Board;
 
 class DistanceSensorAction implements ActionInterface
     {
-    use ActionTrait;
-
     private static $moveMap = array(
         'left' => array(0, -1),
         'right' => array(0, 1),
@@ -15,23 +13,28 @@ class DistanceSensorAction implements ActionInterface
         'down' => array(1, 0),
         );
 
-    public function execute($alias, array $operation)
+    public function execute(Board $board, $alias, array $operation)
         {
         $distance = 0;
-        list($x, $y) = $this->board->getActorPosition($alias);
-        $direction = $this->board->getActorDirection($alias);
+        list($x, $y) = $board->getActorPosition($alias);
+        $direction = $board->getActorDirection($alias);
         $diffX = static::$moveMap[$direction][0];
         $diffY = static::$moveMap[$direction][1];
-        while('ground' === $this->board->getField($x + $diffX, $y + $diffY))
+        while('ground' === $board->getField($x + $diffX, $y + $diffY))
             {
-            $this->board->debug('Scan Field[%s:%s] Field[%s:%s] Type[%s]',
+            $board->debug('Scan Field[%s:%s] Field[%s:%s] Type[%s]',
                 $y, $x, $y + $diffY, $x + $diffX,
-                $this->board->getField($x + $diffX, $y + $diffY));
+                $board->getField($x + $diffX, $y + $diffY));
             $x += $diffX;
             $y += $diffY;
             $distance++;
             }
-        $this->board->setVariable($operation['variable'], $distance);
-        $this->board->debug('Scan Distance[%s] Variable[%s]', $distance, $operation['variable']);
+        $board->setVariable($operation['variable'], $distance);
+        $board->debug('Scan Distance[%s] Variable[%s]', $distance, $operation['variable']);
+        }
+
+    public function getAlias()
+        {
+        return 'sensor-distance';
         }
     }

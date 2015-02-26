@@ -3,7 +3,7 @@ namespace Thunder\Logeek;
 
 interface ActionInterface
     {
-    public function __construct(Board $board);
+    public function execute(Board $board, $alias, array $operation);
 
-    public function execute($alias, array $operation);
+    public function getAlias();
     }

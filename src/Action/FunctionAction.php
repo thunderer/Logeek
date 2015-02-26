@@ -2,14 +2,17 @@
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
-use Thunder\Logeek\Traits\ActionTrait;
+use Thunder\Logeek\Board;
 
 class FunctionAction implements ActionInterface
     {
-    use ActionTrait;
-
-    public function execute($alias, array $operation)
+    public function execute(Board $board, $alias, array $operation)
         {
-        $this->board->runActorProgram($alias, $this->board->getFunction($operation['name']));
+        $board->runActorProgram($alias, $board->getFunction($operation['name']));
+        }
+
+    public function getAlias()
+        {
+        return 'function';
         }
     }

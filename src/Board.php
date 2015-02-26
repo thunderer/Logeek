@@ -28,17 +28,20 @@ class Board
 
     /* --- METHODS --- */
 
+    /**
+     * @param ActionInterface[] $actions
+     */
     public function addActions(array $actions)
         {
-        foreach($actions as $alias => $class)
+        foreach($actions as $action)
             {
-            $this->addAction($alias, $class);
+            $this->addAction($action);
             }
         }
 
-    public function addAction($alias, $class)
+    public function addAction(ActionInterface $action)
         {
-        $this->actions[$alias] = $class;
+        $this->actions[$action->getAlias()] = $action;
         }
 
     public function addFieldTypes(array $types)
@@ -120,7 +123,7 @@ class Board
         $class = $this->actions[$operation['action']];
         /** @var $action ActionInterface */
         $action = new $class($this);
-        $action->execute($alias, $operation);
+        $action->execute($this, $alias, $operation);
         }
 
     public function getActorNextMove($alias)

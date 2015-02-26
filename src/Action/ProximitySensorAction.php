@@ -2,15 +2,18 @@
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
-use Thunder\Logeek\Traits\ActionTrait;
+use Thunder\Logeek\Board;
 
 class ProximitySensorAction implements ActionInterface
     {
-    use ActionTrait;
-
-    public function execute($alias, array $operation)
+    public function execute(Board $board, $alias, array $operation)
         {
-        list($newX, $newY) = $this->board->getActorNextMove($alias);
-        $this->board->setVariable($operation['variable'], $this->board->getField($newX, $newY) === 'ground');
+        list($newX, $newY) = $board->getActorNextMove($alias);
+        $board->setVariable($operation['variable'], $board->getField($newX, $newY) === 'ground');
+        }
+
+    public function getAlias()
+        {
+        return 'sensor-proximity';
         }
     }

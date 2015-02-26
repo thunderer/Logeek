@@ -2,36 +2,39 @@
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
-use Thunder\Logeek\Traits\ActionTrait;
+use Thunder\Logeek\Board;
 
 class MoveAction implements ActionInterface
     {
-    use ActionTrait;
-
-    public function execute($alias, array $operation)
+    public function execute(Board $board, $alias, array $operation)
         {
-        $length = $this->getMoveLength($operation);
+        $length = $this->getMoveLength($board, $operation);
         for($i = 0; $i < $length; $i++)
             {
-            $this->board->moveActor($alias);
+            $board->moveActor($alias);
             }
         }
 
-    private function getMoveLength(array $operation)
+    private function getMoveLength(Board $board, array $operation)
         {
         if(array_key_exists('length', $operation))
             {
             $length = $operation['length'];
-            $this->board->debug('Move Length[%s]', $length);
+            $board->debug('Move Length[%s]', $length);
             return $length;
             }
         if(array_key_exists('variable', $operation))
             {
-            $length = $this->board->getVariable($operation['variable']);
-            $this->board->debug('Move Variable[%s] Length[%s]', $operation['variable'], $length);
+            $length = $board->getVariable($operation['variable']);
+            $board->debug('Move Variable[%s] Length[%s]', $operation['variable'], $length);
             return $length;
             }
 
         return null;
+        }
+
+    public function getAlias()
+        {
+        return 'move';
         }
     }
