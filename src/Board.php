@@ -60,12 +60,15 @@ class Board
     public function loadFromString($string)
         {
         $types = array_flip($this->fieldTypes);
-        $lines = explode("\n", $string);
-        for($i = 0; $i < count($lines); $i++)
+        $lines = explode("\n", trim($string));
+        $height = count($lines);
+        $width = strlen(trim($lines[0]));
+        for($i = 0; $i < $height; $i++)
             {
-            for($j = 0; $j < strlen($lines[0]); $j++)
+            $line = trim($lines[$i]);
+            for($j = 0; $j < $width; $j++)
                 {
-                $this->fields[$i][$j] = $types[$lines[$i][$j]];
+                $this->fields[$i][$j] = $types[$line[$j]];
                 }
             }
         }

@@ -28,13 +28,13 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             new PickAction(),
             new FunctionAction(),
             ));
-        $board->loadFromString(trim(''
-            .'#######'."\n"
-            .'#.#B.B#'."\n"
-            .'#.#.#.#'."\n"
-            .'#B..#.#'."\n"
-            .'#######'."\n"
-            ));
+        $board->loadFromString('
+            #######
+            #.#B.B#
+            #.#.#.#
+            #B..#.#
+            #######
+            ');
         $board->addExit('exit', 5, 3);
         $board->addFunction('pick-rotate', array(
             array('action' => 'pick', 'direction' => 'up'),
@@ -85,14 +85,14 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             new DistanceSensorAction(),
             new OpenAction(),
             ));
-        $board->loadFromString(trim(''
-            .'#######'."\n"
-            .'#...D.#'."\n"
-            .'#D###.#'."\n"
-            .'#.###.#'."\n"
-            .'#.D.#.#'."\n"
-            .'#######'."\n"
-            ));
+        $board->loadFromString(trim('
+            #######
+            #...D.#
+            #D###.#
+            #.###.#
+            #.D.#.#
+            #######
+            '));
         $board->addExit('exit', 3, 4);
         $board->addFunction('move-rotate-open', array(
             array('action' => 'sensor-distance', 'variable' => 'len0'),
@@ -129,15 +129,15 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
             new TypeSensorAction(),
             new IfAction(),
             ));
-        $board->loadFromString(trim(''
-            .'#######'."\n"
-            .'###R###'."\n"
-            .'#....G#'."\n"
-            .'###.###'."\n"
-            .'###.###'."\n"
-            .'###.###'."\n"
-            .'#######'."\n"
-            ));
+        $board->loadFromString(trim('
+            #######
+            ###R###
+            #....G#
+            ###.###
+            ###.###
+            ###.###
+            #######
+            '));
         $board->addExit('exit', 1, 2);
         $board->addActor('bot', 5, 3, 'up', array(
             array('action' => 'sensor-distance', 'variable' => 'len0'),
