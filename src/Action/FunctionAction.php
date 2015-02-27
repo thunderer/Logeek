@@ -15,4 +15,9 @@ class FunctionAction implements ActionInterface
         {
         return 'function';
         }
+
+    public function getArguments()
+        {
+        return array('name');
+        }
     }

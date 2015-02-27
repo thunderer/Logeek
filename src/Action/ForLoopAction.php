@@ -8,7 +8,7 @@ class ForLoopAction implements ActionInterface
     {
     public function execute(Board $board, $alias, array $operation)
         {
-        for($i = 0; $i < $operation['loops']; $i++)
+        for($i = 0; $i < $operation['iterations']; $i++)
             {
             $board->runActorProgram($alias, $operation['program']);
             }
@@ -17,5 +17,10 @@ class ForLoopAction implements ActionInterface
     public function getAlias()
         {
         return 'for';
+        }
+
+    public function getArguments()
+        {
+        return array('iterations');
         }
     }

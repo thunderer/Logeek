@@ -37,4 +37,9 @@ class DistanceSensorAction implements ActionInterface
         {
         return 'sensor-distance';
         }
+
+    public function getArguments()
+        {
+        return array('variable');
+        }
     }

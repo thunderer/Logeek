@@ -8,20 +8,18 @@ class IfAction implements ActionInterface
     {
     public function execute(Board $board, $alias, array $operation)
         {
-        switch($operation['condition'])
-            {
-            case 'variable-equal':
-                {
-                $board->getVariable($operation['variable']) === $operation['value']
-                    ? $board->runActorProgram($alias, $operation['true'])
-                    : $board->runActorProgram($alias, $operation['false']);
-                break;
-                }
-            }
+        $board->getVariable($operation['left']) === $operation['right']
+            ? $board->runActorProgram($alias, $operation['true'])
+            : $board->runActorProgram($alias, $operation['false']);
         }
 
     public function getAlias()
         {
         return 'if';
+        }
+
+    public function getArguments()
+        {
+        return array('left', 'operand', 'right', 'true', 'false');
         }
     }

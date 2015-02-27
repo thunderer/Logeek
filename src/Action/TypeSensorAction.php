@@ -16,4 +16,9 @@ class TypeSensorAction implements ActionInterface
         {
         return 'sensor-type';
         }
+
+    public function getArguments()
+        {
+        return array('variable');
+        }
     }
