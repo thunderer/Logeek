@@ -40,14 +40,14 @@ class LogeekTest extends \PHPUnit_Framework_TestCase
 
         $compiler = new Compiler();
         $functions = $compiler->compile($board, '
-module pick-rotate
+function pick-rotate
   pick up
   move 1
   2 rotate right
   pick down
   2 rotate right
 
-module main
+function main
   2 rotate right
   move 1
   function pick-rotate
@@ -101,13 +101,13 @@ module main
 
         $compiler = new Compiler();
         $functions = $compiler->compile($board, '
-module move-rotate-open
+function move-rotate-open
   sensor-distance len0
   move len0
   rotate left
   open
 
-module main
+function main
   for 3
     function move-rotate-open
   move 2
@@ -151,7 +151,7 @@ module main
 
         $compiler = new Compiler();
         $functions = $compiler->compile($board, '
-module main
+function main
   sensor-distance len0
   move len0
   sensor-type type0

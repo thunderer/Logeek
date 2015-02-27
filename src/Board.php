@@ -51,6 +51,11 @@ class Board
      */
     public function getAction($alias)
         {
+        if(!$this->hasAction($alias))
+            {
+            throw new \RuntimeException(sprintf('Action %s does not exist!', $alias));
+            }
+
         return $this->actions[$alias];
         }
 
@@ -60,6 +65,11 @@ class Board
             {
             $this->addFieldType($alias, $symbol);
             }
+        }
+
+    public function hasAction($alias)
+        {
+        return array_key_exists($alias, $this->actions);
         }
 
     public function addFieldType($alias, $symbol)
