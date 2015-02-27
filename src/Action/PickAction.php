@@ -22,11 +22,13 @@ class PickAction implements ActionInterface
 
         if('up' === $operation['direction'])
             {
+            $board->debug('Pick[up]');
             $board->setField($newX, $newY, 'ground');
             $board->setActorPick($alias, 'brick');
             }
         elseif('down' === $operation['direction'])
             {
+            $board->debug('Pick[down]');
             $board->setField($newX, $newY, 'brick');
             $board->setActorPick($alias, null);
             }
@@ -35,5 +37,10 @@ class PickAction implements ActionInterface
     public function getAlias()
         {
         return 'pick';
+        }
+
+    public function getArguments()
+        {
+        return array('direction');
         }
     }

@@ -17,24 +17,27 @@ class MoveAction implements ActionInterface
 
     private function getMoveLength(Board $board, array $operation)
         {
-        if(array_key_exists('length', $operation))
+        if(is_numeric($operation['distance']))
             {
-            $length = $operation['length'];
+            $length = $operation['distance'];
             $board->debug('Move Length[%s]', $length);
             return $length;
             }
-        if(array_key_exists('variable', $operation))
+        else
             {
-            $length = $board->getVariable($operation['variable']);
-            $board->debug('Move Variable[%s] Length[%s]', $operation['variable'], $length);
+            $length = $board->getVariable($operation['distance']);
+            $board->debug('Move Variable[%s] Length[%s]', $operation['distance'], $length);
             return $length;
             }
-
-        return null;
         }
 
     public function getAlias()
         {
         return 'move';
+        }
+
+    public function getArguments()
+        {
+        return array('distance');
         }
     }

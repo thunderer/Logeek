@@ -24,4 +24,9 @@ class IfAction implements ActionInterface
         {
         return 'if';
         }
+
+    public function getArguments()
+        {
+        return array('left', 'operand', 'right');
+        }
     }

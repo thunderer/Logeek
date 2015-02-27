@@ -33,4 +33,9 @@ class RotateAction implements ActionInterface
         {
         return 'rotate';
         }
+
+    public function getArguments()
+        {
+        return array('direction');
+        }
     }

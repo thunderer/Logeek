@@ -22,4 +22,9 @@ class OpenAction implements ActionInterface
         {
         return 'open';
         }
+
+    public function getArguments()
+        {
+        return array();
+        }
     }

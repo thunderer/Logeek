@@ -44,6 +44,16 @@ class Board
         $this->actions[$action->getAlias()] = $action;
         }
 
+    /**
+     * @param $alias
+     *
+     * @return ActionInterface
+     */
+    public function getAction($alias)
+        {
+        return $this->actions[$alias];
+        }
+
     public function addFieldTypes(array $types)
         {
         foreach($types as $alias => $symbol)
@@ -73,13 +83,12 @@ class Board
             }
         }
 
-    public function addActor($alias, $x, $y, $direction, array $program)
+    public function addActor($alias, $x, $y, $direction)
         {
         $this->actors[$alias] = array(
             'x' => $x,
             'y' => $y,
             'direction' => $direction,
-            'program' => $program,
             'pick' => null,
             );
         $this->debug('Actor Alias[%s] Direction[%s] Position[%s:%s]', $alias, $direction, $y, $x);
@@ -91,6 +100,14 @@ class Board
             'x' => $y,
             'y' => $x,
             );
+        }
+
+    public function addFunctions(array $functions)
+        {
+        foreach($functions as $name => $program)
+            {
+            $this->functions[$name] = $program;
+            }
         }
 
     public function addFunction($name, array $program)
@@ -108,9 +125,7 @@ class Board
 
     public function runActor($alias)
         {
-        $actor = $this->actors[$alias];
-
-        $this->runActorProgram($alias, $actor['program']);
+        $this->runActorProgram($alias, $this->functions['main']);
         }
 
     public function runActorProgram($alias, array $program)
@@ -167,7 +182,6 @@ class Board
         $newX = $actor['x'] + $x;
         $newY = $actor['y'] + $y;
 
-        // echo $this->renderBoard();
         if('wall' === $this->fields[$newX][$newY])
             {
             throw new \RuntimeException(sprintf('Wall at [%s, %s]', $newX, $newY));

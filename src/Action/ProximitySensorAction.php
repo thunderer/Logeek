@@ -16,4 +16,9 @@ class ProximitySensorAction implements ActionInterface
         {
         return 'sensor-proximity';
         }
+
+    public function getArguments()
+        {
+        return array('variable');
+        }
     }
