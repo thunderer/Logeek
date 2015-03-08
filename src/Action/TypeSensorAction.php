@@ -9,7 +9,9 @@ class TypeSensorAction implements ActionInterface
     public function execute(Board $board, $alias, array $operation)
         {
         list($newX, $newY) = $board->getActorNextMove($alias);
-        $board->setVariable($operation['variable'], $board->getField($newX, $newY));
+        $type = $board->getField($newX, $newY);
+        $board->setVariable($operation['variable'], $type);
+        $board->debug(sprintf('Scan Field[%s,%s] Type[%s]', $newX, $newY, $type));
         }
 
     public function getAlias()

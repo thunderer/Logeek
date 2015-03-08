@@ -148,10 +148,7 @@ class Board
 
     private function runActorOperation($alias, array $operation)
         {
-        $class = $this->actions[$operation['action']];
-        /** @var $action ActionInterface */
-        $action = new $class($this);
-        $action->execute($this, $alias, $operation);
+        $this->getAction($operation['action'])->execute($this, $alias, $operation);
         }
 
     public function getActorNextMove($alias)
@@ -192,6 +189,7 @@ class Board
         $newX = $actor['x'] + $x;
         $newY = $actor['y'] + $y;
 
+        $this->debug('Move [%s:%s] -> [%s:%s]', $actor['y'], $actor['x'], $newY, $newX);
         if('wall' === $this->fields[$newX][$newY])
             {
             throw new \RuntimeException(sprintf('Wall at [%s, %s]', $newX, $newY));
@@ -200,7 +198,6 @@ class Board
         $actor['x'] = $newX;
         $actor['y'] = $newY;
         $this->actors[$alias] = $actor;
-        $this->debug('Move [%s:%s] -> [%s:%s]', $actor['y'], $actor['x'], $newY, $newX);
         }
 
     public function debug()

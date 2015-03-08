@@ -55,6 +55,17 @@ class Compiler
                         );
                     break;
                     }
+                case 'while':
+                    {
+                    $code[] = array(
+                        'action' => 'while',
+                        'left' => $tokens[1],
+                        'operator' => $tokens[2],
+                        'right' => $tokens[3],
+                        'program' => $this->compileTree($board, $line['sub']),
+                        );
+                    break;
+                    }
                 default:
                     {
                     $code = array_merge($code, $this->compileSimple($board, $tokens));
@@ -78,7 +89,12 @@ class Compiler
         $code = [];
         for($i = 0; $i < $number; $i++)
             {
-            $code[] = array_merge(array('action' => $action), array_combine($board->getAction($action)->getArguments(), $tokens));
+            $args = $board->getAction($action)->getArguments();
+            if(count($args) !== count($tokens))
+                {
+                throw new \RuntimeException(sprintf('Action args %s does not match tokens %s!', json_encode($args), json_encode($tokens)));
+                }
+            $code[] = array_merge(array('action' => $action), array_combine($args, $tokens));
             }
 
         return $code;

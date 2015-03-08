@@ -10,6 +10,7 @@ use Thunder\Logeek\Action\OpenAction;
 use Thunder\Logeek\Action\PickAction;
 use Thunder\Logeek\Action\RotateAction;
 use Thunder\Logeek\Action\TypeSensorAction;
+use Thunder\Logeek\Action\WhileLoopAction;
 use Thunder\Logeek\Board;
 use Thunder\Logeek\Compiler;
 
@@ -176,6 +177,55 @@ function main
 
         $this->assertEquals(7, $board->getWidth());
         $this->assertEquals(7, $board->getHeight());
+        $this->assertTrue($board->isActorAtExit('bot', 'exit'));
+        }
+
+    public function testBoardLoop()
+        {
+        $board = new Board(6, 5);
+        $board->addFieldTypes(array(
+            'wall' => '#',
+            'ground' => '.',
+            'red' => 'R',
+            'green' => 'G',
+            ));
+        $board->addActions(array(
+            new MoveAction(),
+            new RotateAction(),
+            new DistanceSensorAction(),
+            new TypeSensorAction(),
+            new IfAction(),
+            new WhileLoopAction(20),
+            ));
+        $board->loadFromString(trim('
+            ######
+            #....#
+            #.##.#
+            #..#.#
+            ######
+            '));
+        $board->addExit('exit', 2, 3);
+
+        $compiler = new Compiler();
+        $functions = $compiler->compile($board, '
+function main
+  sensor-type type0
+  while type0 not exit
+    sensor-distance len0
+    while len0 not 0
+      move 1
+      sensor-distance len0
+    rotate left
+  rotate left
+  move 1
+            ');
+
+        $board->addFunctions($functions);
+        $board->addActor('bot', 3, 3, 'up');
+        $board->runActor('bot');
+
+        $this->assertEquals(6, $board->getWidth());
+        $this->assertEquals(5, $board->getHeight());
         $this->assertTrue($board->isActorAtExit('bot', 'exit'));
         }
     }
