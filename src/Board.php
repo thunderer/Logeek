@@ -202,10 +202,11 @@ class Board
 
     public function debug()
         {
-        /* $args = func_get_args();
+        return;
+        $args = func_get_args();
         $message = array_shift($args);
         echo vsprintf($message, $args)."\n";
-        echo $this->renderBoard(); */
+        echo $this->renderBoard();
         }
 
     public function setField($x, $y, $field)
