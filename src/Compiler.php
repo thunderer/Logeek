@@ -86,7 +86,7 @@ class Compiler
             $action = array_shift($tokens);
             }
 
-        $code = [];
+        $code = array();
         for($i = 0; $i < $number; $i++)
             {
             $args = $board->getAction($action)->getArguments();

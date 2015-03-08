@@ -1,13 +1,13 @@
 # Logeek
 
-[![Build Status](https://travis-ci.org/thunderer/SimilarWebApi.png?branch=master)](https://travis-ci.org/thunderer/SimilarWebApi)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/5b82d37f-c410-4fb7-982c-ad495f488526/mini.png)](https://insight.sensiolabs.com/projects/5b82d37f-c410-4fb7-982c-ad495f488526)
-[![License](https://poser.pugx.org/thunderer/similarweb-api/license.svg)](https://packagist.org/packages/thunderer/similarweb-api)
-[![Latest Stable Version](https://poser.pugx.org/thunderer/similarweb-api/v/stable.svg)](https://packagist.org/packages/thunderer/similarweb-api)
-[![Dependency Status](https://www.versioneye.com/php/thunderer:similarweb-api/badge.svg)](https://www.versioneye.com/php/thunderer:similarweb-api)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thunderer/SimilarWebApi/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thunderer/SimilarWebApi/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/thunderer/SimilarWebApi/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thunderer/SimilarWebApi/?branch=master)
-[![Code Climate](https://codeclimate.com/github/thunderer/SimilarWebApi/badges/gpa.svg)](https://codeclimate.com/github/thunderer/SimilarWebApi)
+[![Build Status](https://travis-ci.org/thunderer/Logeek.png?branch=master)](https://travis-ci.org/thunderer/Logeek)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/d64a8617-97e7-457f-ae3d-334310b8c4f5/mini.png)](https://insight.sensiolabs.com/projects/d64a8617-97e7-457f-ae3d-334310b8c4f5)
+[![License](https://poser.pugx.org/thunderer/logeek/license.svg)](https://packagist.org/packages/thunderer/logeek)
+[![Latest Stable Version](https://poser.pugx.org/thunderer/logeek/v/stable.svg)](https://packagist.org/packages/thunderer/logeek)
+[![Dependency Status](https://www.versioneye.com/php/thunderer:logeek/badge.svg)](https://www.versioneye.com/php/thunderer:logeek)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thunderer/Logeek/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thunderer/Logeek/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/thunderer/Logeek/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/thunderer/Logeek/?branch=master)
+[![Code Climate](https://codeclimate.com/github/thunderer/Logeek/badges/gpa.svg)](https://codeclimate.com/github/thunderer/Logeek)
 
 ## Introduction
 
