@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
@@ -13,7 +14,7 @@ final class PickAction implements ActionInterface
         'down' => [1, 0],
     ];
 
-    public function execute(Board $board, $alias, array $operation)
+    public function execute(Board $board, string $alias, array $operation)
     {
         $direction = $board->getActorDirection($alias);
         list($x, $y) = $board->getActorPosition($alias);
@@ -31,12 +32,12 @@ final class PickAction implements ActionInterface
         }
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'pick';
     }
 
-    public function getArguments()
+    public function getArguments(): array
     {
         return ['direction'];
     }

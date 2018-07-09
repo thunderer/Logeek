@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
@@ -13,7 +14,7 @@ final class WhileLoopAction implements ActionInterface
         $this->iterations = $iterations;
     }
 
-    public function execute(Board $board, $alias, array $operation)
+    public function execute(Board $board, string $alias, array $operation)
     {
         $iteration = 0;
         while(true) {
@@ -35,12 +36,12 @@ final class WhileLoopAction implements ActionInterface
         }
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'while';
     }
 
-    public function getArguments()
+    public function getArguments(): array
     {
         return ['left', 'operator', 'right', 'program'];
     }

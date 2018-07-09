@@ -1,16 +1,17 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek;
 
 final class Compiler
 {
-    public function compile(Board $board, $code)
+    public function compile(Board $board, $code): array
     {
         $lines = explode("\n", trim($code));
         $tree = $this->buildTree($lines);
         $functions = [];
         foreach($tree as $fn) {
             $tokens = explode(' ', $fn['line']);
-            if(!$fn['line'] || !$tokens) {
+            if(!$tokens || !$fn['line']) {
                 continue;
             }
             $functions[$tokens[1]] = $this->compileTree($board, $fn['sub']);
@@ -19,7 +20,7 @@ final class Compiler
         return $functions;
     }
 
-    private function compileTree(Board $board, array $tree)
+    private function compileTree(Board $board, array $tree): array
     {
         $code = [];
         while(true) {
@@ -28,7 +29,7 @@ final class Compiler
             }
             $line = array_shift($tree);
             $tokens = explode(' ', $line['line']);
-            if(!$line['line'] || !$tokens) {
+            if(!$tokens || !$line['line']) {
                 continue;
             }
             switch($tokens[0]) {
@@ -72,7 +73,7 @@ final class Compiler
         return $code;
     }
 
-    private function compileSimple(Board $board, array $tokens)
+    private function compileSimple(Board $board, array $tokens): array
     {
         $action = array_shift($tokens);
         $number = 1;
@@ -84,7 +85,7 @@ final class Compiler
         $code = [];
         for($i = 0; $i < $number; $i++) {
             $args = $board->getAction($action)->getArguments();
-            if(count($args) !== count($tokens)) {
+            if(\count($args) !== \count($tokens)) {
                 throw new \RuntimeException(sprintf('Action args %s does not match tokens %s!', json_encode($args), json_encode($tokens)));
             }
             $code[] = array_merge(['action' => $action], array_combine($args, $tokens));
@@ -93,7 +94,7 @@ final class Compiler
         return $code;
     }
 
-    private function buildTree(array $lines)
+    private function buildTree(array $lines): array
     {
         $tree = [];
         while($lines) {
@@ -106,15 +107,15 @@ final class Compiler
             $tree[] = [
                 'line' => trim($line),
                 'level' => $level,
-                'sub' => $this->buildTree($subLines, $level + 1),
+                'sub' => $this->buildTree($subLines),
             ];
         }
 
         return $tree;
     }
 
-    private function getLineLevel($line)
+    private function getLineLevel($line): int
     {
-        return (int)((strlen($line) - strlen(ltrim($line))) / 2);
+        return (int)((\strlen($line) - \strlen(ltrim($line))) / 2);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek\Action;
 
 use Thunder\Logeek\ActionInterface;
@@ -6,7 +7,7 @@ use Thunder\Logeek\Board;
 
 final class MoveAction implements ActionInterface
 {
-    public function execute(Board $board, $alias, array $operation)
+    public function execute(Board $board, string $alias, array $operation)
     {
         $length = $this->getMoveLength($board, $operation);
         for($i = 0; $i < $length; $i++) {
@@ -20,19 +21,19 @@ final class MoveAction implements ActionInterface
             $length = $operation['distance'];
             $board->debug('Move Length[%s]', $length);
             return $length;
-        } else {
-            $length = $board->getVariable($operation['distance']);
-            $board->debug('Move Variable[%s] Length[%s]', $operation['distance'], $length);
-            return $length;
         }
+
+        $length = $board->getVariable($operation['distance']);
+        $board->debug('Move Variable[%s] Length[%s]', $operation['distance'], $length);
+        return $length;
     }
 
-    public function getAlias()
+    public function getAlias(): string
     {
         return 'move';
     }
 
-    public function getArguments()
+    public function getArguments(): array
     {
         return ['distance'];
     }

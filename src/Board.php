@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek;
 
 final class Board
@@ -20,7 +21,7 @@ final class Board
         'down' => [1, 0],
     ];
 
-    public function __construct($width, $height)
+    public function __construct(int $width, int $height)
     {
         $this->width = $width;
         $this->height = $height;
@@ -43,12 +44,7 @@ final class Board
         $this->actions[$action->getAlias()] = $action;
     }
 
-    /**
-     * @param $alias
-     *
-     * @return ActionInterface
-     */
-    public function getAction($alias)
+    public function getAction(string $alias): ActionInterface
     {
         if(!$this->hasAction($alias)) {
             throw new \RuntimeException(sprintf('Action %s does not exist!', $alias));
@@ -64,7 +60,7 @@ final class Board
         }
     }
 
-    public function hasAction($alias)
+    public function hasAction($alias): bool
     {
         return array_key_exists($alias, $this->actions);
     }
@@ -78,8 +74,8 @@ final class Board
     {
         $types = array_flip($this->fieldTypes);
         $lines = explode("\n", trim($string));
-        $height = count($lines);
-        $width = strlen(trim($lines[0]));
+        $height = \count($lines);
+        $width = \strlen(trim($lines[0]));
         for($i = 0; $i < $height; $i++) {
             $line = trim($lines[$i]);
             for($j = 0; $j < $width; $j++) {
@@ -119,7 +115,7 @@ final class Board
         $this->functions[$name] = $program;
     }
 
-    public function isActorAtExit($actor, $exit)
+    public function isActorAtExit($actor, $exit): bool
     {
         $actor = $this->actors[$actor];
         $exit = $this->exits[$exit];
@@ -144,7 +140,7 @@ final class Board
         $this->getAction($operation['action'])->execute($this, $alias, $operation);
     }
 
-    public function getActorNextMove($alias)
+    public function getActorNextMove($alias): array
     {
         list($x, $y) = $this->getActorPosition($alias);
         list($diffX, $diffY) = static::$moveMap[$this->getActorDirection($alias)];
@@ -177,8 +173,7 @@ final class Board
         ];
 
         $actor = $this->actors[$alias];
-        $x = $moveMap[$actor['direction']][0];
-        $y = $moveMap[$actor['direction']][1];
+        list($x, $y) = $moveMap[$actor['direction']];
         $newX = $actor['x'] + $x;
         $newY = $actor['y'] + $y;
 
@@ -192,7 +187,7 @@ final class Board
         $this->actors[$alias] = $actor;
     }
 
-    public function debug()
+    public function debug(...$args)
     {
     }
 
@@ -226,12 +221,12 @@ final class Board
         $this->actors[$alias]['pick'] = $pick;
     }
 
-    public function getActorPosition($alias)
+    public function getActorPosition($alias): array
     {
         return [$this->actors[$alias]['x'], $this->actors[$alias]['y']];
     }
 
-    public function renderBoard()
+    public function renderBoard(): string
     {
         $return = '';
         $return .= "\n";
@@ -262,12 +257,12 @@ final class Board
 
     /* --- GETTERS --- */
 
-    public function getWidth()
+    public function getWidth(): int
     {
         return $this->width;
     }
 
-    public function getHeight()
+    public function getHeight(): int
     {
         return $this->height;
     }

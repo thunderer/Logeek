@@ -1,24 +1,12 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek;
 
 interface ActionInterface
 {
-    /**
-     * @param Board $board
-     * @param $alias
-     * @param array $operation
-     *
-     * @return void
-     */
-    public function execute(Board $board, $alias, array $operation);
+    public function execute(Board $board, string $alias, array $operation);
 
-    /**
-     * @return string
-     */
-    public function getAlias();
+    public function getAlias(): string;
 
-    /**
-     * @return array
-     */
-    public function getArguments();
+    public function getArguments(): array;
 }

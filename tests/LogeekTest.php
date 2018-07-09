@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 namespace Thunder\Logeek\Tests;
 
 use PHPUnit\Framework\TestCase;
@@ -37,7 +38,7 @@ final class LogeekTest extends TestCase
             #.#.#.#
             #B..#.#
             #######
-            ');
+        ');
         $board->addExit('exit', 5, 3);
 
         $compiler = new Compiler();
