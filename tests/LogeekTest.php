@@ -1,6 +1,7 @@
 <?php
 namespace Thunder\Logeek\Tests;
 
+use PHPUnit\Framework\TestCase;
 use Thunder\Logeek\Action\DistanceSensorAction;
 use Thunder\Logeek\Action\ForLoopAction;
 use Thunder\Logeek\Action\FunctionAction;
@@ -14,22 +15,22 @@ use Thunder\Logeek\Action\WhileLoopAction;
 use Thunder\Logeek\Board;
 use Thunder\Logeek\Compiler;
 
-class LogeekTest extends \PHPUnit_Framework_TestCase
-    {
+final class LogeekTest extends TestCase
+{
     public function testBoardMoves()
-        {
+    {
         $board = new Board(7, 5);
-        $board->addFieldTypes(array(
+        $board->addFieldTypes([
             'wall' => '#',
             'ground' => '.',
             'brick' => 'B',
-            ));
-        $board->addActions(array(
+        ]);
+        $board->addActions([
             new MoveAction(),
             new RotateAction(),
             new PickAction(),
             new FunctionAction(),
-            ));
+        ]);
         $board->loadFromString('
             #######
             #.#B.B#
@@ -71,17 +72,17 @@ function main
         $this->assertEquals(7, $board->getWidth());
         $this->assertEquals(5, $board->getHeight());
         $this->assertTrue($board->isActorAtExit('bot', 'exit'));
-        }
+    }
 
     public function testBoardSensors()
-        {
+    {
         $board = new Board(7, 6);
-        $board->addFieldTypes(array(
+        $board->addFieldTypes([
             'wall' => '#',
             'ground' => '.',
             'door' => 'D',
-            ));
-        $board->addActions(array(
+        ]);
+        $board->addActions([
             new MoveAction(),
             new RotateAction(),
             new PickAction(),
@@ -89,7 +90,7 @@ function main
             new ForLoopAction(),
             new DistanceSensorAction(),
             new OpenAction(),
-            ));
+        ]);
         $board->loadFromString(trim('
             #######
             #...D.#
@@ -121,24 +122,24 @@ function main
         $this->assertEquals(7, $board->getWidth());
         $this->assertEquals(6, $board->getHeight());
         $this->assertTrue($board->isActorAtExit('bot', 'exit'));
-        }
+    }
 
     public function testBoardOperators()
-        {
+    {
         $board = new Board(7, 7);
-        $board->addFieldTypes(array(
+        $board->addFieldTypes([
             'wall' => '#',
             'ground' => '.',
             'red' => 'R',
             'green' => 'G',
-            ));
-        $board->addActions(array(
+        ]);
+        $board->addActions([
             new MoveAction(),
             new RotateAction(),
             new DistanceSensorAction(),
             new TypeSensorAction(),
             new IfAction(),
-            ));
+        ]);
         $board->loadFromString(trim('
             #######
             ###R###
@@ -147,7 +148,7 @@ function main
             ###.###
             ###.###
             #######
-            '));
+        '));
         $board->addExit('exit', 1, 2);
 
         $compiler = new Compiler();
@@ -178,25 +179,25 @@ function main
         $this->assertEquals(7, $board->getWidth());
         $this->assertEquals(7, $board->getHeight());
         $this->assertTrue($board->isActorAtExit('bot', 'exit'));
-        }
+    }
 
     public function testBoardLoop()
-        {
+    {
         $board = new Board(6, 5);
-        $board->addFieldTypes(array(
+        $board->addFieldTypes([
             'wall' => '#',
             'ground' => '.',
             'red' => 'R',
             'green' => 'G',
-            ));
-        $board->addActions(array(
+        ]);
+        $board->addActions([
             new MoveAction(),
             new RotateAction(),
             new DistanceSensorAction(),
             new TypeSensorAction(),
             new IfAction(),
             new WhileLoopAction(20),
-            ));
+        ]);
         $board->loadFromString(trim('
             ######
             #....#
@@ -227,5 +228,5 @@ function main
         $this->assertEquals(6, $board->getWidth());
         $this->assertEquals(5, $board->getHeight());
         $this->assertTrue($board->isActorAtExit('bot', 'exit'));
-        }
     }
+}

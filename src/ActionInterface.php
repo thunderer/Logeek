@@ -2,7 +2,7 @@
 namespace Thunder\Logeek;
 
 interface ActionInterface
-    {
+{
     /**
      * @param Board $board
      * @param $alias
@@ -21,4 +21,4 @@ interface ActionInterface
      * @return array
      */
     public function getArguments();
-    }
+}

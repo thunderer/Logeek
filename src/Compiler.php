@@ -1,129 +1,120 @@
 <?php
 namespace Thunder\Logeek;
 
-class Compiler
-    {
+final class Compiler
+{
     public function compile(Board $board, $code)
-        {
+    {
         $lines = explode("\n", trim($code));
         $tree = $this->buildTree($lines);
-        $functions = array();
-        foreach($tree as $fn)
-            {
+        $functions = [];
+        foreach($tree as $fn) {
             $tokens = explode(' ', $fn['line']);
-            if(!$fn['line'] || !$tokens) { continue; }
-            $functions[$tokens[1]] = $this->compileTree($board, $fn['sub']);
+            if(!$fn['line'] || !$tokens) {
+                continue;
             }
-
-        return $functions;
+            $functions[$tokens[1]] = $this->compileTree($board, $fn['sub']);
         }
 
+        return $functions;
+    }
+
     private function compileTree(Board $board, array $tree)
-        {
-        $code = array();
-        while(true)
-            {
-            if(!$tree) { break; }
+    {
+        $code = [];
+        while(true) {
+            if(!$tree) {
+                break;
+            }
             $line = array_shift($tree);
             $tokens = explode(' ', $line['line']);
-            if(!$line['line'] || !$tokens) { continue; }
-            switch($tokens[0])
-                {
-                case 'for':
-                    {
-                    $code[] = array(
+            if(!$line['line'] || !$tokens) {
+                continue;
+            }
+            switch($tokens[0]) {
+                case 'for': {
+                    $code[] = [
                         'action' => 'for',
                         'iterations' => $tokens[1],
                         'program' => $this->compileTree($board, $line['sub']),
-                        );
+                    ];
                     break;
-                    }
-                case 'none':
-                    {
-                    break;
-                    }
-                case 'if':
-                    {
+                }
+                case 'none': { break; }
+                case 'if': {
                     $else = array_shift($tree);
-                    $code[] = array(
+                    $code[] = [
                         'action' => 'if',
                         'left' => $tokens[1],
                         'operator' => $tokens[2],
                         'right' => $tokens[3],
                         'true' => $this->compileTree($board, $line['sub']),
                         'false' => $this->compileTree($board, $else['sub']),
-                        );
+                    ];
                     break;
-                    }
-                case 'while':
-                    {
-                    $code[] = array(
+                }
+                case 'while': {
+                    $code[] = [
                         'action' => 'while',
                         'left' => $tokens[1],
                         'operator' => $tokens[2],
                         'right' => $tokens[3],
                         'program' => $this->compileTree($board, $line['sub']),
-                        );
+                    ];
                     break;
-                    }
-                default:
-                    {
+                }
+                default: {
                     $code = array_merge($code, $this->compileSimple($board, $tokens));
-                    }
                 }
             }
+        }
 
         return $code;
-        }
+    }
 
     private function compileSimple(Board $board, array $tokens)
-        {
+    {
         $action = array_shift($tokens);
         $number = 1;
-        if(is_numeric($action))
-            {
+        if(is_numeric($action)) {
             $number = $action;
             $action = array_shift($tokens);
-            }
-
-        $code = array();
-        for($i = 0; $i < $number; $i++)
-            {
-            $args = $board->getAction($action)->getArguments();
-            if(count($args) !== count($tokens))
-                {
-                throw new \RuntimeException(sprintf('Action args %s does not match tokens %s!', json_encode($args), json_encode($tokens)));
-                }
-            $code[] = array_merge(array('action' => $action), array_combine($args, $tokens));
-            }
-
-        return $code;
         }
 
+        $code = [];
+        for($i = 0; $i < $number; $i++) {
+            $args = $board->getAction($action)->getArguments();
+            if(count($args) !== count($tokens)) {
+                throw new \RuntimeException(sprintf('Action args %s does not match tokens %s!', json_encode($args), json_encode($tokens)));
+            }
+            $code[] = array_merge(['action' => $action], array_combine($args, $tokens));
+        }
+
+        return $code;
+    }
+
     private function buildTree(array $lines)
-        {
-        $tree = array();
-        while($lines)
-            {
+    {
+        $tree = [];
+        while($lines) {
             $line = array_shift($lines);
             $level = $this->getLineLevel($line);
-            $subLines = array();
-            while($lines && $this->getLineLevel($lines[0]) > $level)
-                {
+            $subLines = [];
+            while($lines && $this->getLineLevel($lines[0]) > $level) {
                 $subLines[] = array_shift($lines);
-                }
-            $tree[] = array(
+            }
+            $tree[] = [
                 'line' => trim($line),
                 'level' => $level,
                 'sub' => $this->buildTree($subLines, $level + 1),
-                );
-            }
+            ];
+        }
 
         return $tree;
-        }
+    }
 
     private function getLineLevel($line)
-        {
-        return intval((strlen($line) - strlen(ltrim($line))) / 2);
-        }
+    {
+        return (int)((strlen($line) - strlen(ltrim($line))) / 2);
     }
+}
